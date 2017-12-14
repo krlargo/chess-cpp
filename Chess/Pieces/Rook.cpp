@@ -1,9 +1,8 @@
-//
-//  Rook.cpp
-//  Chess
-//
-//  Created by Kevin Largo on 12/13/17.
-//  Copyright © 2017 xkevlar. All rights reserved.
-//
-
 #include "Rook.hpp"
+
+// Constructor
+Rook::Rook(Color color, int rankIndex, int fileIndex) : Piece(color, rankIndex, fileIndex) {
+    name = "Rook";
+    symbol = "R";
+}
+
