@@ -5,9 +5,10 @@
 
 #include <iostream>
 
-class Bishop: public Piece {
+class Bishop: public virtual Piece {
 public:
     Bishop(Color color, square position);
+    virtual bool isValidMove(square destination);
 };
 
 #endif
