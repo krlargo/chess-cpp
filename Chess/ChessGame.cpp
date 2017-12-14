@@ -15,13 +15,15 @@ ChessGame::ChessGame() {
     setupChessboard();
 }
 
-Piece* ChessGame::getPieceStartingAtPosition(int rankIndex, int fileIndex) {
+Piece* ChessGame::getPieceFromStartingPosition(int rankIndex, int fileIndex) {
     // No pieces are initialized at these ranks
     if(rankIndex >= 2 && rankIndex <= 5) return NULL;
     
-    // Return Pawns for these ranks
-    if(rankIndex == 1) return new Pawn(white, rankIndex, fileIndex);
-    if(rankIndex == 6) return new Pawn(black, rankIndex, fileIndex);
+    square startPosition(rankIndex, fileIndex);
+    
+    // Return Pawns for ranks 2 & 7 (front rows)
+    if(rankIndex == 1) return new Pawn(white, startPosition);
+    if(rankIndex == 6) return new Pawn(black, startPosition);
     
     // Return other pieces at ranks 1 & 8, filtering by file
     if(rankIndex == 0 || rankIndex == 7) {
@@ -31,21 +33,21 @@ Piece* ChessGame::getPieceStartingAtPosition(int rankIndex, int fileIndex) {
         switch(fileIndex) {
             case 0: // File a
             case 7: // Files h
-                return new Rook(color, fileIndex, rankIndex);
+                return new Rook(color, startPosition);
                 break;
             case 1: // File b
             case 6: // File g
-                return new Knight(color, fileIndex, rankIndex);
+                return new Knight(color, startPosition);
                 break;
             case 2: // File c
             case 5: // File f
-                return new Bishop(color, fileIndex, rankIndex);
+                return new Bishop(color, startPosition);
                 break;
             case 3: // File d
-                return new King(color, fileIndex, rankIndex);
+                return new King(color, startPosition);
                 break;
             case 4: // File e
-                return new Queen(color, fileIndex, rankIndex);
+                return new Queen(color, startPosition);
                 break;
             default:
                 return NULL;
@@ -58,12 +60,32 @@ Piece* ChessGame::getPieceStartingAtPosition(int rankIndex, int fileIndex) {
 void ChessGame::setupChessboard() {
     for(int rankIndex = 0; rankIndex < 8; rankIndex++) {
         for(int fileIndex = 0; fileIndex < 8; fileIndex++) {
+            
             // Get piece based on starting position
-            Piece* piece = getPieceStartingAtPosition(rankIndex, fileIndex);
+            Piece* piece = getPieceFromStartingPosition(rankIndex, fileIndex);
             
             // Instantiate Square object (empty squares will be null)
             chessboard[rankIndex][fileIndex] = piece;
         }
+    }
+}
+
+Piece* ChessGame::getPieceAtPosition(square position) {
+    int rankIndex = position.first;
+    int fileIndex = position.second;
+    return chessboard[rankIndex][fileIndex];
+}
+
+void ChessGame::setPieceToPosition(Piece* movingPiece, square destination) {
+    // Check if piece can make a valid move to the destination square
+    if(movingPiece->isValidMove(destination)) {
+        Piece* pieceAtNewPosition = getPieceAtPosition(destination);
+        
+        // "Eat" piece at destination square
+        if(pieceAtNewPosition) delete pieceAtNewPosition;
+        
+        // Move piece
+        movingPiece->move(destination);
     }
 }
 
@@ -88,4 +110,6 @@ void ChessGame::displayChessboard() {
 
 void ChessGame::startGame() {
     displayChessboard();
+    
+    
 }
