@@ -15,7 +15,7 @@ bool Pawn::isValidMove(square destination) {
     int startRankIndex = color == white ? 1 : 6;
     int jumpRankIndex = color == white ? 3 : 4;
     if(position.first == startRankIndex &&
-       destination.first == jumpRankIndex && dy == 0)
+       destination.first == jumpRankIndex && dx == 0)
         return true;
 
     // Otherwise Pawns can only move forward one space
