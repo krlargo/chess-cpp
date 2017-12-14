@@ -1,13 +1,14 @@
+//
+//  King.hpp
+//  Chess
+//
+//  Created by Kevin Largo on 12/13/17.
+//  Copyright © 2017 xkevlar. All rights reserved.
+//
+
 #ifndef King_hpp
 #define King_hpp
 
-#include "Square.hpp"
-#include <iostream>
+#include <stdio.h>
 
-class King: public Piece {
-public:
-  King(Square* sq);
-  bool isValidMove(Square* sq);
-};
-
-#endif
+#endif /* King_hpp */
