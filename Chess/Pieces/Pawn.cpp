@@ -6,8 +6,13 @@ Pawn::Pawn(Color color, square position) : Piece(color, position) {
     letter = 'P';
 }
 
-bool Pawn::isValidMove(square destination) {
+bool Pawn::isValidMove(vector<vector<Piece*> >* chessboard, square destination) {
     if(position == destination) return false;
+    
+    int rankIndex = destination.first;
+    int fileIndex = destination.second;
+    Piece* destinationPiece = chessboard[rankIndex][fileIndex];
+    
     int dy = abs(destination.first - position.first);
     int dx = abs(destination.second - position.second);
 
@@ -18,9 +23,14 @@ bool Pawn::isValidMove(square destination) {
        destination.first == jumpRankIndex && dx == 0)
         return true;
 
-    // Otherwise Pawns can only move forward one space
-    if(dx != 0) return false;
-    if((dy == 1 && color == white) || (dy == -1 && color == black)) return true;
+    if(dx == 0) { // If Pawn is moving forward one step
+        if((dy == 1 && color == white) || (dy == -1 && color == black))
+            return true;
+    } else if(dx == 1 && destinationPiece) { // If Pawn is eating diagonally
+        if((dy == 1 && color != destinationPiece->getColor()) || // Can only capture opponent pieces
+           (dy == -1 && color != destinationPiece->getColor()))
+            return true;
+    }
 
     return false;
 }

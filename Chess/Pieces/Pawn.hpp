@@ -8,7 +8,7 @@
 class Pawn: public Piece {
 public:
     Pawn(Color color, square position);
-    virtual bool isValidMove(square destination);
+    virtual bool isValidMove(vector<vector<Piece*> >* chessboard, square destination);
 };
 
 #endif
