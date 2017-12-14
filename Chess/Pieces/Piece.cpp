@@ -1,41 +1,18 @@
 #include "Piece.hpp"
 
-string Piece::getColor()
-{ return color; }
+// Constructor
+Piece::Piece(Color color, int rankIndex, int fileIndex) : color(color), fileIndex(fileIndex), rankIndex(rankIndex) {}
 
-void Piece::setColor(string c)
-{
-  color = c;
-  name = c[0] + name;
-}
+// No setters for the following since these properties can't be changed
+Color Piece::getColor() { return color; }
+string Piece::getName() { return name; }
+string Piece::getSymbol() { return (color == white ? "w" : "b") + symbol; }
 
-string Piece::getName()
-{ return name; }
+int Piece::getFileIndex() { return fileIndex; }
+void Piece::setFileIndex(int index) { this->fileIndex = index; }
 
-void Piece::setName(string n)
-{
-  name = n;
-  symbol = n[0];
-}
-
-char Piece::getFile()
-{ return file; }
-
-
-int Piece::getRank()
-{ return rank; }
-
-Square* Piece::getSquare()
-{ return square; }
-
-void Piece::setSquare(Square* sq)
-{ square = sq; }
-
-char Piece::getSymbol()
-{ return symbol; }
-
-void Piece::setSymbol(char c)
-{ symbol = c; }
+int Piece::getRankIndex() { return rankIndex; }
+void Piece::setRankIndex(int index) { this->rankIndex = index; }
 
 /*
 void Piece::move(Square* targetSquare)
