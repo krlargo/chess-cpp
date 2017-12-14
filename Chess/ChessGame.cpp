@@ -96,10 +96,13 @@ void ChessGame::setPieceToPosition(Piece* movingPiece, square destination) {
     
     // "Eat" piece at destination square
     if(pieceAtNewPosition) delete pieceAtNewPosition;
+  
     // New position points to movingPiece
     chessboard[destination.first][destination.second] = movingPiece;
+    
     // Nullify old position
     chessboard[movingPiece->getRankIndex()][movingPiece->getFileIndex()] = NULL;
+    
     // Assign new location to movingPiece
     movingPiece->move(destination);
 }
@@ -165,7 +168,7 @@ void ChessGame::promptInvalidInputMessage() {
 }
 
 void promptIllegalMoveMessage() {
-    cout << "Illegal move. Please enter a valid move." << endl;
+    cout << "Illegal move. Please enter a valid move." << endl << endl;
 }
 
 void ChessGame::startGame() {
