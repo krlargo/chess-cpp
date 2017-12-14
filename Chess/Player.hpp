@@ -21,7 +21,8 @@ class Player {
 
 public:
     Player(Color color);
-    
+    // No need for destructor because board handles Piece deletion
+
     void addPiece(Piece* piece);
     vector<Piece*> getPiecesOfType(string symbol);
     vector<Piece*> getAllPieces();
