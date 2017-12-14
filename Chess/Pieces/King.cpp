@@ -1,9 +1,8 @@
-//
-//  King.cpp
-//  Chess
-//
-//  Created by Kevin Largo on 12/13/17.
-//  Copyright © 2017 xkevlar. All rights reserved.
-//
-
 #include "King.hpp"
+
+// Constructor
+King::King(Color color, int rankIndex, int fileIndex) : Piece(color, rankIndex, fileIndex) {
+    name = "King";
+    symbol = "K";
+}
+
