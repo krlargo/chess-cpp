@@ -10,7 +10,7 @@ using namespace std;
 class Piece {
 protected:
     string name; // "bK", "wQ", etc. Used for ASCII-interface representation
-    string symbol; // "K", "Q", etc.
+    char letter; // "K", "Q", etc.
     Color color;
     square position;
     
@@ -19,6 +19,7 @@ public:
 
     Color getColor();
     string getName();
+    char getLetter();
     string getSymbol();
     
     int getRankIndex();

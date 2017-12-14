@@ -3,7 +3,7 @@
 // Constructor
 Pawn::Pawn(Color color, square position) : Piece(color, position) {
     name = "Pawn";
-    symbol = "P";
+    letter = 'P';
 }
 
 /*bool Pawn::isValidMove(square destination) {

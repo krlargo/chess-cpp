@@ -7,12 +7,21 @@
 #include "Knight.hpp"
 #include "Rook.hpp"
 
+#include <regex>
+
 ChessGame::ChessGame() {
     // Assign default values
     turn = white;
     isCheck = isCheckmate = false;
-
+    
+    whitePlayer = new Player(white);
+    blackPlayer = new Player(black);
+    
     setupChessboard();
+}
+
+Player* ChessGame::getActivePlayer() {
+    return turn == white ? whitePlayer : blackPlayer;
 }
 
 Piece* ChessGame::getPieceFromStartingPosition(int rankIndex, int fileIndex) {
@@ -66,6 +75,12 @@ void ChessGame::setupChessboard() {
             
             // Instantiate Square object (empty squares will be null)
             chessboard[rankIndex][fileIndex] = piece;
+            
+            // If a piece exists at the position, add it to the appropriate player
+            if(piece) {
+                Player* player = rankIndex < 4 ? whitePlayer : blackPlayer;
+                player->addPiece(piece);
+            }
         }
     }
 }
@@ -77,16 +92,16 @@ Piece* ChessGame::getPieceAtPosition(square position) {
 }
 
 void ChessGame::setPieceToPosition(Piece* movingPiece, square destination) {
-    // Check if piece can make a valid move to the destination square
-    if(movingPiece->isValidMove(destination)) {
-        Piece* pieceAtNewPosition = getPieceAtPosition(destination);
-        
-        // "Eat" piece at destination square
-        if(pieceAtNewPosition) delete pieceAtNewPosition;
-        
-        // Move piece
-        movingPiece->move(destination);
-    }
+    Piece* pieceAtNewPosition = getPieceAtPosition(destination);
+    
+    // "Eat" piece at destination square
+    if(pieceAtNewPosition) delete pieceAtNewPosition;
+    // New position points to movingPiece
+    chessboard[destination.first][destination.second] = movingPiece;
+    // Nullify old position
+    chessboard[movingPiece->getRankIndex()][movingPiece->getFileIndex()] = NULL;
+    // Assign new location to movingPiece
+    movingPiece->move(destination);
 }
 
 void ChessGame::displayChessboard() {
@@ -105,11 +120,77 @@ void ChessGame::displayChessboard() {
         }
     }
     cout << "  +---+---+---+---+---+---+---+---+" << endl;
-    cout << "    a   b   c   d   e   f   g   h" << endl;
+    cout << "    a   b   c   d   e   f   g   h" << endl << endl;
+}
+
+// Takes the destination notation and returns the index pair equivalent e.g. "e4"->(4,3)
+square ChessGame::squareFromNotation(string notation) {
+    int rankIndex = notation[1] - '1';
+    int fileIndex = notation[0] - 'a';
+    return square(rankIndex, fileIndex);
+}
+
+// The move input is valid; check if actual move is valid
+bool ChessGame::processMove(string input) {
+    // Input length should be 3; if it's 2 then move is for Pawn (omitted P)
+    string symbol = input.length() == 2 ? "P" : string(1,toupper(input[0]));
+    string squareNotation = input.substr(input.length()-2,2); // Get last 2 characters of input
+    
+    square destination = squareFromNotation(squareNotation);
+    
+    vector<Piece*> pieceTypeVector = getActivePlayer()->getPiecesOfType(symbol);
+
+    for(auto piece: pieceTypeVector) {
+        if(piece->isValidMove(destination)) {
+            setPieceToPosition(piece, destination);
+            return true; // TODO: Account for multiple pieces being capable of making the same move
+        }
+    }
+    
+    // We've iterated through all relevant pieces and none can legally make the move
+    return false;
+}
+
+void ChessGame::promptInvalidInputMessage() {
+    cout << "Invalid input. Enter a move using the following notation:" << endl;
+    cout << "Enter a piece identifier:" << endl;
+    cout << "- K: King" << endl;
+    cout << "- Q: Queen" << endl;
+    cout << "- B: Bishop" << endl;
+    cout << "- N: Knight" << endl;
+    cout << "- R: Rook" << endl;
+    cout << "- P (or nothing): Pawn" << endl;
+    cout << "and a square position to move to: (e.g. \"d4\" or \"e5\")"  << endl;
+    cout << "to make a move (e.g. \"Kd4\" or \"Qe5\")" << endl << endl;
+}
+
+void promptIllegalMoveMessage() {
+    cout << "Illegal move. Please enter a valid move." << endl;
 }
 
 void ChessGame::startGame() {
-    displayChessboard();
     
-    
+    while(!isCheckmate) {
+        displayChessboard();
+        
+        bool isValidInput, isValidMove;
+        string moveInput;
+        regex regexPattern("[PKQBNRpkqbnr]?[A-Ha-h][1-8]");
+        
+        do {
+            cout << "Enter a move using chess notation: ";
+            cin >> moveInput;
+            cout << endl;
+            isValidInput = regex_match(moveInput, regexPattern);
+            
+            if(!isValidInput) {
+                promptInvalidInputMessage();
+            } else {
+                isValidMove = processMove(moveInput);
+                if(!isValidMove) {
+                    promptIllegalMoveMessage();
+                }
+            }
+        } while(!isValidInput);
+    }
 }

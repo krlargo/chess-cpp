@@ -3,6 +3,6 @@
 // Constructor
 Bishop::Bishop(Color color, square position) : Piece(color, position) {
     name = "Bishop";
-    symbol = "B";
+    letter = 'B';
 }
 
