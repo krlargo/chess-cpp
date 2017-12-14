@@ -12,8 +12,7 @@ string Piece::getSymbol() { return (color == white ? "w" : "b") + string(1,lette
 int Piece::getRankIndex() { return position.first; }
 int Piece::getFileIndex() { return position.second; }
 
+// Only move after destination has been validated
 void Piece::move(square destination) {
-    if(isValidMove(destination)) {
-        position = destination;
-    }
+    position = destination;
 }

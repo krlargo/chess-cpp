@@ -6,7 +6,7 @@ Rook::Rook(Color color, square position) : Piece(color, position) {
     letter = 'R';
 }
 
-bool Rook::isValidMove(square destination) {
+bool Rook::isValidMove(vector<vector<Piece*> >* chessboard, square destination) {
     if(position == destination) return false;
     int dy = abs(destination.first - position.first);
     int dx = abs(destination.second - position.second);

@@ -8,7 +8,7 @@
 class Rook: public virtual Piece {
 public:
     Rook(Color color, square position);
-    virtual bool isValidMove(square destination);
+    virtual bool isValidMove(vector<vector<Piece*> >* chessboard, square destination);
 };
 
 #endif

@@ -6,7 +6,7 @@ King::King(Color color, square position) : Piece(color, position) {
     letter = 'K';
 }
 
-bool King::isValidMove(square destination) {
+bool King::isValidMove(vector<vector<Piece*> >* chessboard, square destination) {
     if(position == destination) return false;
     int dy = abs(destination.first - position.first);
     int dx = abs(destination.second - position.second);

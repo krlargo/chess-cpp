@@ -6,7 +6,7 @@ Bishop::Bishop(Color color, square position) : Piece(color, position) {
     letter = 'B';
 }
 
-bool Bishop::isValidMove(square destination) {
+bool Bishop::isValidMove(vector<vector<Piece*> >* chessboard, square destination) {
     if(position == destination) return false;
     int dy = abs(destination.first - position.first);
     int dx = abs(destination.second - position.second);

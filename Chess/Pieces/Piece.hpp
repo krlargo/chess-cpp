@@ -25,7 +25,7 @@ public:
     int getRankIndex();
     int getFileIndex();
     
-    virtual bool isValidMove(square destination) = 0;
+    virtual bool isValidMove(vector<vector<Piece*> >* chessboard, square destination) = 0;
     void move(square destination);
 };
 

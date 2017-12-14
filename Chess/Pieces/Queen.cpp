@@ -6,8 +6,8 @@ Queen::Queen(Color color, square position) : Piece(color, position), Bishop(colo
     Piece::letter = 'Q';
 }
 
-bool Queen::isValidMove(square destination) {
-    bool isValidForBishop = Bishop::isValidMove(destination);
-    bool isValidForRook = Rook::isValidMove(destination);
+bool Queen::isValidMove(vector<vector<Piece*> >* chessboard, square destination) {
+    bool isValidForBishop = Bishop::isValidMove(chessboard, destination);
+    bool isValidForRook = Rook::isValidMove(chessboard, destination);
     return isValidForBishop || isValidForRook;
 }

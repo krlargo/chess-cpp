@@ -6,7 +6,7 @@ Knight::Knight(Color color, square position) : Piece(color, position) {
     letter = 'N';
 }
 
-bool Knight::isValidMove(square destination) {
+bool Knight::isValidMove(vector<vector<Piece*> >* chessboard, square destination) {
     if(position == destination) return false;
     int dy = abs(destination.first - position.first);
     int dx = abs(destination.second - position.second);
