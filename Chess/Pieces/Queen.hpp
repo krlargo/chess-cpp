@@ -7,7 +7,7 @@
 
 class Queen: public Piece {
 public:
-    Queen(Color color, int rankIndex, int fileIndex);
+    Queen(Color color, square position);
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include "Queen.hpp"
 
 // Constructor
-Queen::Queen(Color color, int rankIndex, int fileIndex) : Piece(color, rankIndex, fileIndex) {
+Queen::Queen(Color color, square position) : Piece(color, position) {
     name = "Queen";
     symbol = "Q";
 }

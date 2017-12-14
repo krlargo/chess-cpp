@@ -7,7 +7,7 @@
 
 class Knight: public Piece {
 public:
-    Knight(Color color, int rankIndex, int fileIndex);
+    Knight(Color color, square position);
 };
 
 #endif

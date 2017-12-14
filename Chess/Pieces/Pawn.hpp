@@ -7,7 +7,7 @@
 
 class Pawn: public Piece {
 public:
-    Pawn(Color color, int rankIndex, int fileIndex);
+    Pawn(Color color, square position);
 };
 
 #endif

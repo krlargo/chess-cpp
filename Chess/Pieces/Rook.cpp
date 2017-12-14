@@ -1,7 +1,7 @@
 #include "Rook.hpp"
 
 // Constructor
-Rook::Rook(Color color, int rankIndex, int fileIndex) : Piece(color, rankIndex, fileIndex) {
+Rook::Rook(Color color, square position) : Piece(color, position) {
     name = "Rook";
     symbol = "R";
 }

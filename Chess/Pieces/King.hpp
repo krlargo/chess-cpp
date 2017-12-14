@@ -7,7 +7,7 @@
 
 class King: public Piece {
 public:
-    King(Color color, int rankIndex, int fileIndex);
+    King(Color color, square position);
 };
 
 #endif

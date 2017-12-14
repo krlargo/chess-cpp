@@ -1,7 +1,7 @@
 #ifndef Piece_hpp
 #define Piece_hpp
 
-#include "Color.hpp"
+#include "Global.hpp"
 
 #include <iostream>
 
@@ -12,23 +12,21 @@ protected:
     string name; // "bK", "wQ", etc. Used for ASCII-interface representation
     string symbol; // "K", "Q", etc.
     Color color;
-    int rankIndex;
-    int fileIndex;
+    square position;
     
 public:
-    Piece(Color color, int rankIndex, int fileIndex);
+    Piece(Color color, square position);
 
     Color getColor();
     string getName();
     string getSymbol();
     
-    int getFileIndex();
-    void setFileIndex(int index);
-    
     int getRankIndex();
-    void setRankIndex(int index);
+    int getFileIndex();
     
-    //virtual bool isValidMove(Square* sq) = 0;
+    //virtual bool isValidMove(square destination) = 0;
+    bool isValidMove(square destination);
+    void move(square destination);
 };
 
 #endif

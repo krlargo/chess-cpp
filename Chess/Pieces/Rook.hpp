@@ -7,7 +7,7 @@
 
 class Rook: public Piece {
 public:
-    Rook(Color color, int rankIndex, int fileIndex);
+    Rook(Color color, square position);
 };
 
 #endif

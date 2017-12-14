@@ -1,7 +1,7 @@
 #include "Knight.hpp"
 
 // Constructor
-Knight::Knight(Color color, int rankIndex, int fileIndex) : Piece(color, rankIndex, fileIndex) {
+Knight::Knight(Color color, square position) : Piece(color, position) {
     name = "Knight";
     symbol = "N";
 }

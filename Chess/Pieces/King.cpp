@@ -1,7 +1,7 @@
 #include "King.hpp"
 
 // Constructor
-King::King(Color color, int rankIndex, int fileIndex) : Piece(color, rankIndex, fileIndex) {
+King::King(Color color, square position) : Piece(color, position) {
     name = "King";
     symbol = "K";
 }

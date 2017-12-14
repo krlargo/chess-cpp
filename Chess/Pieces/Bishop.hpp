@@ -7,7 +7,7 @@
 
 class Bishop: public Piece {
 public:
-    Bishop(Color color, int rankIndex, int fileIndex);
+    Bishop(Color color, square position);
 };
 
 #endif

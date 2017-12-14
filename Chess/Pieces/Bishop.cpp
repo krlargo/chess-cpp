@@ -1,7 +1,7 @@
 #include "Bishop.hpp"
 
 // Constructor
-Bishop::Bishop(Color color, int rankIndex, int fileIndex) : Piece(color, rankIndex, fileIndex) {
+Bishop::Bishop(Color color, square position) : Piece(color, position) {
     name = "Bishop";
     symbol = "B";
 }
