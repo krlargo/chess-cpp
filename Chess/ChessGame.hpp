@@ -1,7 +1,7 @@
 #ifndef ChessGame_hpp
 #define ChessGame_hpp
 
-#include "Piece.hpp";
+#include "Piece.hpp"
 
 using namespace std;
 
@@ -12,13 +12,16 @@ private:
     
     Piece* chessboard[8][8];
 
-    Piece* getPieceStartingAtPosition(int rankIndex, int fileIndex);
+    Piece* getPieceFromStartingPosition(int rankIndex, int fileIndex);
 
 public:
     ChessGame();
     void setupChessboard();
     void displayChessboard();
     void startGame();
+    
+    Piece* getPieceAtPosition(square position);
+    void setPieceToPosition(Piece* piece, square destination);
 };
 
 #endif
