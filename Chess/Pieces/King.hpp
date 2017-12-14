@@ -8,6 +8,7 @@
 class King: public Piece {
 public:
     King(Color color, square position);
+    virtual bool isValidMove(square destination);
 };
 
 #endif

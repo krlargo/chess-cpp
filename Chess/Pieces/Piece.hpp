@@ -16,7 +16,7 @@ protected:
     
 public:
     Piece(Color color, square position);
-
+    
     Color getColor();
     string getName();
     char getLetter();

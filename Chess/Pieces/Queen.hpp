@@ -1,13 +1,15 @@
 #ifndef Queen_hpp
 #define Queen_hpp
 
-#include "Piece.hpp"
+#include "Bishop.hpp"
+#include "Rook.hpp"
 
 #include <iostream>
 
-class Queen: public Piece {
+class Queen: public Bishop, public Rook {
 public:
     Queen(Color color, square position);
+    virtual bool isValidMove(square destination);
 };
 
 #endif

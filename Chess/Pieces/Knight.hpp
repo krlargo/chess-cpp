@@ -8,6 +8,7 @@
 class Knight: public Piece {
 public:
     Knight(Color color, square position);
+    virtual bool isValidMove(square destination);
 };
 
 #endif

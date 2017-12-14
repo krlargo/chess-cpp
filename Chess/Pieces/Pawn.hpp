@@ -8,6 +8,7 @@
 class Pawn: public Piece {
 public:
     Pawn(Color color, square position);
+    virtual bool isValidMove(square destination);
 };
 
 #endif
