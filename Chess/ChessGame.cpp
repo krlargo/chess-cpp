@@ -20,6 +20,21 @@ ChessGame::ChessGame() {
     setupChessboard();
 }
 
+ChessGame::~ChessGame() {
+    delete whitePlayer;
+    delete blackPlayer;
+    
+    for(int rankIndex = 0; rankIndex < 8; rankIndex++)
+        for(int fileIndex = 0; fileIndex < 8; fileIndex++) {
+            Piece* piece = chessboard[rankIndex][fileIndex];
+            if(piece) delete piece;
+        }
+}
+
+void ChessGame::changeTurn() {
+    turn = (turn == white ? black : white);
+}
+
 Player* ChessGame::getActivePlayer() {
     return turn == white ? whitePlayer : blackPlayer;
 }
@@ -67,14 +82,18 @@ Piece* ChessGame::getPieceFromStartingPosition(int rankIndex, int fileIndex) {
 }
 
 void ChessGame::setupChessboard() {
+    
     for(int rankIndex = 0; rankIndex < 8; rankIndex++) {
+        
+        vector<Piece*> rankRow;
+
         for(int fileIndex = 0; fileIndex < 8; fileIndex++) {
             
             // Get piece based on starting position
             Piece* piece = getPieceFromStartingPosition(rankIndex, fileIndex);
             
             // Instantiate Square object (empty squares will be null)
-            chessboard[rankIndex][fileIndex] = piece;
+            rankRow.push_back(piece);
             
             // If a piece exists at the position, add it to the appropriate player
             if(piece) {
@@ -82,6 +101,8 @@ void ChessGame::setupChessboard() {
                 player->addPiece(piece);
             }
         }
+        
+        chessboard.push_back(rankRow);
     }
 }
 
@@ -144,7 +165,8 @@ bool ChessGame::processMove(string input) {
     vector<Piece*> pieceTypeVector = getActivePlayer()->getPiecesOfType(symbol);
 
     for(auto piece: pieceTypeVector) {
-        if(piece->isValidMove(destination)) {
+        // Check if piece can make the move
+        if(piece->isValidMove(&chessboard, destination)) {
             setPieceToPosition(piece, destination);
             return true; // TODO: Account for multiple pieces being capable of making the same move
         }
@@ -195,5 +217,7 @@ void ChessGame::startGame() {
                 }
             }
         } while(!isValidInput);
+        
+        changeTurn();
     }
 }

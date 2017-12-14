@@ -11,13 +11,15 @@ private:
     Color turn;
     bool isCheck, isCheckmate;
     Player *whitePlayer, *blackPlayer;
-    Piece* chessboard[8][8];
+    vector<vector<Piece*> > chessboard;
 
     Player* getActivePlayer(); // Player whose turn it is
 
     void setupChessboard();
     void displayChessboard();
 
+    void changeTurn();
+    
     Piece* getPieceFromStartingPosition(int rankIndex, int fileIndex);
     Piece* getPieceAtPosition(square position);
     void setPieceToPosition(Piece* piece, square destination);
@@ -26,6 +28,7 @@ private:
     void promptInvalidInputMessage();
 public:
     ChessGame();
+    ~ChessGame();
     void startGame();
 };
 
