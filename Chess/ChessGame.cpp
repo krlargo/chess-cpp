@@ -231,7 +231,7 @@ void ChessGame::startGame() {
                     promptIllegalMoveMessage();
                 }
             }
-        } while(!isValidInput);
+        } while(!isValidInput || !isValidMove);
         
         changeTurn();
     }
