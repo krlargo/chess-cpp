@@ -16,7 +16,26 @@ bool Rook::isValidMove(vector<vector<Piece*> > chessboard, square destination) {
     Piece* destinationPiece = chessboard[rankIndex][fileIndex];
     if(destinationPiece && destinationPiece->getColor() == color) return false;
     
-    int dy = abs(destination.first - position.first);
+    // Make sure position is horizontal or vertical
     int dx = abs(destination.second - position.second);
-    return (dx != 0) !=  (dy != 0); // XOR: One of the translations should be 0
+    int dy = abs(destination.first - position.first);
+    if((dx != 0) && (dy != 0)) return false; // Either dx or dy must be 0
+    
+    // Check that no other pieces are blocking it
+    // Get unit vector; should be either 1,-1, or 0
+    int dxUnit = (dx ? (dx/abs(dx)) : 0);
+    int dyUnit = (dy ? (dy/abs(dy)) : 0);
+    // Start at next square towards destination
+    int x = position.second + dxUnit;
+    int y = position.first + dyUnit;
+    // Iterate one square at a time
+    while(x != destination.second && y != destination.first) {
+        // If a piece is blocking, move is invalid
+        if(chessboard[y][x]) return false;
+        // Increment one square at a time
+        x += dxUnit;
+        y += dyUnit;
+    }
+    
+    return true;
 }

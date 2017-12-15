@@ -15,8 +15,9 @@ bool King::isValidMove(vector<vector<Piece*> > chessboard, square destination) {
     int fileIndex = destination.second;
     Piece* destinationPiece = chessboard[rankIndex][fileIndex];
     if(destinationPiece && destinationPiece->getColor() == color) return false;
-    
-    int dy = abs(destination.first - position.first);
+
+    // Can only move 1 square away
     int dx = abs(destination.second - position.second);
+    int dy = abs(destination.first - position.first);
     return dx <= 1 && dy <= 1;
 }

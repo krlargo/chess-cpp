@@ -16,8 +16,8 @@ bool Pawn::isValidMove(vector<vector<Piece*> > chessboard, square destination) {
     Piece* destinationPiece = chessboard[rankIndex][fileIndex];
     if(destinationPiece && destinationPiece->getColor() == color) return false;
     
-    int dy = destination.first - position.first; // Don't use abs() because we need to know direction
     int dx = abs(destination.second - position.second);
+    int dy = destination.first - position.first; // Don't use abs() because we need to know direction
 
     // If Pawn is at starting position, it can jump two spaces
     int startRankIndex = color == white ? 1 : 6;
