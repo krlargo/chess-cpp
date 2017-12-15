@@ -4,6 +4,7 @@
 #include "Global.hpp"
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ protected:
     
 public:
     Piece(Color color, square position);
+    virtual ~Piece() = default;
     
     Color getColor();
     string getName();
@@ -25,7 +27,7 @@ public:
     int getRankIndex();
     int getFileIndex();
     
-    virtual bool isValidMove(vector<vector<Piece*> >* chessboard, square destination) = 0;
+    virtual bool isValidMove(vector<vector<Piece*> > chessboard, square destination) = 0;
     void move(square destination);
 };
 

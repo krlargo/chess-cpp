@@ -9,7 +9,7 @@
 class Queen: public Bishop, public Rook {
 public:
     Queen(Color color, square position);
-    virtual bool isValidMove(vector<vector<Piece*> >* chessboard, square destination);
+    virtual bool isValidMove(vector<vector<Piece*> > chessboard, square destination);
 };
 
 #endif
