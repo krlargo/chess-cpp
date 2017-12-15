@@ -155,7 +155,7 @@ void ChessGame::displayChessboard() {
 // Takes the destination notation and returns the index pair equivalent e.g. "e4"->(4,3)
 square ChessGame::squareFromNotation(string notation) {
     int rankIndex = notation[1] - '1';
-    int fileIndex = notation[0] - 'a';
+    int fileIndex = tolower(notation[0]) - 'a';
     return square(rankIndex, fileIndex);
 }
 
