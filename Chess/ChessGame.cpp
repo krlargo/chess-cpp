@@ -39,6 +39,10 @@ Player* ChessGame::getActivePlayer() {
     return turn == white ? whitePlayer : blackPlayer;
 }
 
+Player* ChessGame::getInactivePlayer() {
+    return turn == white ? blackPlayer : whitePlayer;
+}
+
 Piece* ChessGame::getPieceFromStartingPosition(int rankIndex, int fileIndex) {
     // No pieces are initialized at these ranks
     if(rankIndex >= 2 && rankIndex <= 5) return NULL;
@@ -116,7 +120,8 @@ void ChessGame::setPieceToPosition(Piece* movingPiece, square destination) {
     Piece* pieceAtNewPosition = getPieceAtPosition(destination);
     
     // "Eat" piece at destination square
-    if(pieceAtNewPosition) delete pieceAtNewPosition;
+    if(pieceAtNewPosition)
+        getInactivePlayer()->losePiece(pieceAtNewPosition);
   
     // New position points to movingPiece
     chessboard[destination.first][destination.second] = movingPiece;
@@ -157,16 +162,24 @@ square ChessGame::squareFromNotation(string notation) {
 // The move input is valid; check if actual move is valid
 bool ChessGame::processMove(string input) {
     // Input length should be 3; if it's 2 then move is for Pawn (omitted P)
-    string symbol = input.length() == 2 ? "P" : string(1,toupper(input[0]));
+    char symbol = input.length() == 2 ? 'P' : toupper(input[0]);
     string squareNotation = input.substr(input.length()-2,2); // Get last 2 characters of input
     
     square destination = squareFromNotation(squareNotation);
     
     vector<Piece*> pieceTypeVector = getActivePlayer()->getPiecesOfType(symbol);
-
-    for(auto piece: pieceTypeVector) {
+    vector<Piece*>::iterator it;
+    
+    for(it = pieceTypeVector.begin(); it != pieceTypeVector.end(); it++) {
+        Piece* piece = *it;
+        
+        if(!piece) {
+            getActivePlayer()->removePieceFromTypeAtPosition(symbol, it);
+            continue;
+        }
+    
         // Check if piece can make the move
-        if(piece->isValidMove(&chessboard, destination)) {
+        if(piece->isValidMove(chessboard, destination)) {
             setPieceToPosition(piece, destination);
             return true; // TODO: Account for multiple pieces being capable of making the same move
         }
@@ -203,7 +216,9 @@ void ChessGame::startGame() {
         regex regexPattern("[PKQBNRpkqbnr]?[A-Ha-h][1-8]");
         
         do {
-            cout << "Enter a move using chess notation: ";
+            moveInput = "";
+            cout << (turn == white ? "White" : "Black") << "'s turn." << endl;
+            cout << "Enter a move using chess notation: " << endl;
             cin >> moveInput;
             cout << endl;
             isValidInput = regex_match(moveInput, regexPattern);

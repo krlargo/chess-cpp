@@ -14,7 +14,8 @@ private:
     vector<vector<Piece*> > chessboard;
 
     Player* getActivePlayer(); // Player whose turn it is
-
+    Player* getInactivePlayer();
+    
     void setupChessboard();
     void displayChessboard();
 
