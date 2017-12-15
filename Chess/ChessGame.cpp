@@ -211,7 +211,7 @@ void ChessGame::startGame() {
     while(!isCheckmate) {
         displayChessboard();
         
-        bool isValidInput, isValidMove;
+        bool isValidInput = false, isValidMove = false;
         string moveInput;
         regex regexPattern("[PKQBNRpkqbnr]?[A-Ha-h][1-8]");
         
